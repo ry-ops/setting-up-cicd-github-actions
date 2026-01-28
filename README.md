@@ -1,5 +1,9 @@
 # Setting Up CI/CD with GitHub Actions
 
+<p align="center">
+  <img src="hero.svg" alt="Setting Up CI/CD with GitHub Actions" width="100%">
+</p>
+
 A comprehensive guide and production-ready template repository for implementing CI/CD pipelines using GitHub Actions. This repository includes working examples, best practices, and reusable workflow templates for Node.js, Python, Docker, and Kubernetes deployments.
 
 ## Quick Start
