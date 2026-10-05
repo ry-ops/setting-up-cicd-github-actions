@@ -1,213 +1,91 @@
-# Setting Up CI/CD with GitHub Actions
-
 <p align="center">
-  <img src="hero.svg" alt="Setting Up CI/CD with GitHub Actions" width="100%">
+  <img src="docs/hero.svg" width="100%" alt="A pull request triggers CI (lint, tests on Node 18 and 20, build with coverage); merging to main triggers CD (build, deploy to staging with smoke tests, then production); security scanning runs npm audit, Snyk and Trivy on a schedule.">
 </p>
 
-A comprehensive guide and production-ready template repository for implementing CI/CD pipelines using GitHub Actions. This repository includes working examples, best practices, and reusable workflow templates for Node.js, Python, Docker, and Kubernetes deployments.
+<h1 align="center">Setting Up CI/CD with GitHub Actions</h1>
 
-## Quick Start
+<p align="center"><b>A production-ready CI/CD template you can lift into any repo.</b> Working workflows for lint, test, build, deploy and security scanning — plus a sample app and ready-to-use templates for Node, Python, Docker and Kubernetes.</p>
 
-### 1. Clone the Repository
+<p align="center">
+  <img src="https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-2088FF?logo=githubactions&logoColor=white" alt="GitHub Actions">
+  <img src="https://img.shields.io/badge/tests-Node%2018%20%26%2020-43c777?logo=node.js&logoColor=white" alt="Node 18 & 20">
+  <img src="https://img.shields.io/badge/scans-npm%20audit%20%C2%B7%20Snyk%20%C2%B7%20Trivy-8b5cf6" alt="Security scans">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-8b96ad" alt="MIT"></a>
+</p>
+
+---
+
+## The pipeline
+
+Three workflows cover the full loop:
+
+- **`ci.yml`** — on every pull request: **lint** (ESLint) → **test** on a Node 18 + 20 matrix (Jest) → **build** with coverage uploaded to Codecov.
+- **`cd.yml`** — on merge to `main`: **build & test** → **deploy to staging** (with smoke tests) → **deploy to production**, using GitHub Environments.
+- **`security-scan.yml`** — on a weekly cron (and on push/PR): **npm audit**, **Snyk** (SAST) and **Trivy** (filesystem) scans.
+
+## Copy, customize, ship
+
+<p align="center">
+  <img src="docs/templates.svg" width="100%" alt="Three live workflows (ci.yml, cd.yml, security-scan.yml) plus ready-to-use templates for Python, Docker and Kubernetes.">
+</p>
+
+| File | What it does |
+|---|---|
+| [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Lint → test (Node 18 & 20) → build + coverage, on every PR |
+| [`.github/workflows/cd.yml`](.github/workflows/cd.yml) | Build → staging + smoke tests → production, on merge to main |
+| [`.github/workflows/security-scan.yml`](.github/workflows/security-scan.yml) | npm audit · Snyk · Trivy, weekly + on push/PR |
+| [`examples/python-ci.yml`](examples/python-ci.yml) | Flask/Django CI with pytest |
+| [`examples/docker-build.yml`](examples/docker-build.yml) | Multi-stage build + push, image optimization |
+| [`examples/k8s-deploy.yml`](examples/k8s-deploy.yml) | Kubernetes rolling deployment |
+
+## Quick start
 
 ```bash
 git clone https://github.com/ry-ops/setting-up-cicd-github-actions.git
-cd setting-up-cicd-github-actions
-```
+cd setting-up-cicd-github-actions/app
 
-### 2. Install Dependencies (for Node.js sample app)
-
-```bash
-cd app
 npm install
+npm test       # run the Jest suite
+npm start      # sample Express app → http://localhost:3000
 ```
 
-### 3. Run Tests Locally
+To use it in your own project:
 
-```bash
-npm test
+1. Copy `.github/workflows/` into your repository (and any template from `examples/`).
+2. Adjust triggers, Node versions, and deploy steps for your stack.
+3. Add the required secrets below.
+4. Open a PR — the pipeline runs itself.
+
+## Required secrets
+
+Set these under **Settings → Secrets and variables → Actions**:
+
+| Secret | Used for |
+|---|---|
+| `DEPLOY_TOKEN` | Deployment authentication |
+| `DOCKER_USERNAME` / `DOCKER_PASSWORD` | Docker Hub (if using Docker) |
+| `KUBE_CONFIG` | Kubernetes config, base64-encoded (if using K8s) |
+| `SNYK_TOKEN` | Snyk security scanning |
+
+## What's inside
+
 ```
-
-### 4. Start the Application
-
-```bash
-npm start
-```
-
-The sample application will be available at `http://localhost:3000`.
-
-### 5. Customize Workflows
-
-Copy the workflow files from `.github/workflows/` to your own repository and customize them according to your needs. See [documentation/WORKFLOWS.md](documentation/WORKFLOWS.md) for detailed configuration options.
-
-## Project Structure
-
-```
-setting-up-cicd-github-actions/
-├── LICENSE                      # MIT License
-├── README.md                    # This file
-├── app/                         # Sample Node.js application
-│   ├── package.json            # Node.js dependencies and scripts
-│   ├── index.js                # Express.js application
-│   └── tests/                  # Test files
-│       └── app.test.js         # Jest test suite
-├── .github/
-│   └── workflows/              # GitHub Actions workflows
-│       ├── ci.yml              # Continuous Integration
-│       ├── cd.yml              # Continuous Deployment
-│       └── security-scan.yml   # Security scanning
-├── examples/                    # Workflow templates for different stacks
-│   ├── python-ci.yml           # Python CI workflow
-│   ├── docker-build.yml        # Docker build and push
-│   └── k8s-deploy.yml          # Kubernetes deployment
-└── documentation/              # Detailed documentation
-    ├── SETUP.md                # Initial setup guide
-    ├── WORKFLOWS.md            # Workflow explanations
-    └── BEST-PRACTICES.md       # CI/CD best practices
-```
-
-## Features
-
-### Production-Ready Workflows
-
-- **Continuous Integration (CI)**: Automatically runs on pull requests
-  - Code linting (ESLint)
-  - Unit and integration tests (Jest)
-  - Build verification
-  - Code coverage reporting
-
-- **Continuous Deployment (CD)**: Automatically deploys on merge to main
-  - Build and test verification
-  - Automated deployment to staging/production
-  - Rollback capabilities
-
-- **Security Scanning**: Regular security checks
-  - Dependency vulnerability scanning
-  - SAST (Static Application Security Testing)
-  - License compliance
-
-### Sample Application
-
-A fully functional Node.js/Express.js application with:
-- RESTful API endpoints
-- Comprehensive test coverage
-- Production-ready configuration
-- Health check endpoints
-
-### Examples for Multiple Stacks
-
-Ready-to-use workflow templates for:
-- **Python**: Flask/Django applications with pytest
-- **Docker**: Multi-stage builds with image optimization
-- **Kubernetes**: Automated deployments with rolling updates
-
-## Examples
-
-### Basic CI Workflow
-
-The CI workflow automatically runs on every pull request:
-
-```yaml
-on:
-  pull_request:
-    branches: [ main, develop ]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - run: npm ci
-      - run: npm run lint
-      - run: npm test
-      - run: npm run build
-```
-
-### Deploying to Production
-
-The CD workflow deploys to production when code is merged to main:
-
-```yaml
-on:
-  push:
-    branches: [ main ]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build and Deploy
-        run: |
-          npm ci
-          npm run build
-          # Deploy to your hosting platform
-```
-
-### Security Scanning
-
-Automated security checks run on a schedule:
-
-```yaml
-on:
-  schedule:
-    - cron: '0 0 * * 0'  # Weekly on Sunday
-  push:
-    branches: [ main ]
-
-jobs:
-  security:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run security scan
-        uses: aquasecurity/trivy-action@master
+app/                       # sample Node/Express app with a Jest suite
+.github/workflows/         # ci.yml · cd.yml · security-scan.yml
+examples/                  # python-ci · docker-build · k8s-deploy templates
+documentation/             # SETUP · WORKFLOWS · BEST-PRACTICES
 ```
 
 ## Documentation
 
-- [SETUP.md](documentation/SETUP.md) - Step-by-step setup instructions for new projects
-- [WORKFLOWS.md](documentation/WORKFLOWS.md) - Detailed explanation of each workflow
-- [BEST-PRACTICES.md](documentation/BEST-PRACTICES.md) - CI/CD best practices and optimization tips
-
-## Getting Started with Your Project
-
-1. Copy the `.github/workflows/` directory to your repository
-2. Customize the workflows based on your stack (see `examples/` for templates)
-3. Configure required secrets in your GitHub repository settings
-4. Update workflow triggers and conditions as needed
-5. Test your workflows by creating a pull request
-
-## Required GitHub Secrets
-
-Configure these secrets in your repository settings (Settings > Secrets and variables > Actions):
-
-- `DEPLOY_TOKEN`: Authentication token for deployment
-- `DOCKER_USERNAME`: Docker Hub username (if using Docker)
-- `DOCKER_PASSWORD`: Docker Hub password or access token
-- `KUBE_CONFIG`: Kubernetes config file (base64 encoded, if using K8s)
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+- [SETUP.md](documentation/SETUP.md) — step-by-step setup for a new project
+- [WORKFLOWS.md](documentation/WORKFLOWS.md) — each workflow explained
+- [BEST-PRACTICES.md](documentation/BEST-PRACTICES.md) — optimization & tips
+- [GitHub Actions docs](https://docs.github.com/en/actions) · [workflow syntax](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Resources
-
-- [GitHub Actions Documentation](https://docs.github.com/en/actions)
-- [Workflow Syntax Reference](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
-- [GitHub Actions Marketplace](https://github.com/marketplace?type=actions)
-
-## Support
-
-For questions and support, please open an issue in this repository.
+MIT. See [LICENSE](LICENSE).
 
 <!-- org-footer -->
 ---

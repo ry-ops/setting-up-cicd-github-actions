@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" width="960" height="400" role="img" aria-labelledby="t d">
+  <title id="t">CI/CD with GitHub Actions: lint, test, build, deploy, scan</title>
+  <desc id="d">A production-ready pipeline: a pull request triggers CI (lint, tests on Node 18 and 20, build with coverage); merging to main triggers CD (build, deploy to staging with smoke tests, then production); security scanning runs on a schedule with npm audit, Snyk and Trivy.</desc>
+  <defs><linearGradient id="title" x1="0" x2="1"><stop offset="0" stop-color="#2088FF"/><stop offset=".5" stop-color="#43c777"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+  <style>
+    text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill:#e8eef5; }
+    .muted { fill:#8795a8; } .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    rect.st0,rect.st1,rect.st2,rect.st3,rect.st4,rect.st5,rect.st6 { stroke-width:1.5; }
+    @keyframes st0 { 0%,3.75% { fill:#1b2430; stroke:#30404f } 8.75%,100% { fill:#132418; stroke:#43c777 } } .st0 { animation:st0 8.0s infinite; }
+    @keyframes ck0 { 0%,5.62% { opacity:0 } 10.00%,100% { opacity:1 } } .ck0 { animation:ck0 8.0s infinite; }
+    @keyframes st1 { 0%,15.00% { fill:#1b2430; stroke:#30404f } 20.00%,100% { fill:#132418; stroke:#43c777 } } .st1 { animation:st1 8.0s infinite; }
+    @keyframes ck1 { 0%,16.88% { opacity:0 } 21.25%,100% { opacity:1 } } .ck1 { animation:ck1 8.0s infinite; }
+    @keyframes st2 { 0%,26.25% { fill:#1b2430; stroke:#30404f } 31.25%,100% { fill:#132418; stroke:#43c777 } } .st2 { animation:st2 8.0s infinite; }
+    @keyframes ck2 { 0%,28.12% { opacity:0 } 32.50%,100% { opacity:1 } } .ck2 { animation:ck2 8.0s infinite; }
+    @keyframes st3 { 0%,37.50% { fill:#1b2430; stroke:#30404f } 42.50%,100% { fill:#132418; stroke:#43c777 } } .st3 { animation:st3 8.0s infinite; }
+    @keyframes ck3 { 0%,39.38% { opacity:0 } 43.75%,100% { opacity:1 } } .ck3 { animation:ck3 8.0s infinite; }
+    @keyframes st4 { 0%,52.50% { fill:#1b2430; stroke:#30404f } 57.50%,100% { fill:#132418; stroke:#43c777 } } .st4 { animation:st4 8.0s infinite; }
+    @keyframes ck4 { 0%,54.38% { opacity:0 } 58.75%,100% { opacity:1 } } .ck4 { animation:ck4 8.0s infinite; }
+    @keyframes st5 { 0%,63.75% { fill:#1b2430; stroke:#30404f } 68.75%,100% { fill:#132418; stroke:#43c777 } } .st5 { animation:st5 8.0s infinite; }
+    @keyframes ck5 { 0%,65.62% { opacity:0 } 70.00%,100% { opacity:1 } } .ck5 { animation:ck5 8.0s infinite; }
+    @keyframes st6 { 0%,77.50% { fill:#1b2430; stroke:#30404f } 82.50%,100% { fill:#132418; stroke:#43c777 } } .st6 { animation:st6 8.0s infinite; }
+    @keyframes ck6 { 0%,79.38% { opacity:0 } 83.75%,100% { opacity:1 } } .ck6 { animation:ck6 8.0s infinite; }
+    @keyframes run { 0%{offset-distance:0%} 100%{offset-distance:100%} } .run { animation: run 8s linear infinite; offset-path: path('M70 150 H 890'); }
+    @media (prefers-reduced-motion: reduce) { * { animation:none !important; } rect[class^=st]{fill:#132418;stroke:#43c777} text[class^=ck]{opacity:1} }
+  </style>
+  <rect width="960" height="400" rx="20" fill="#0d1117"/>
+  <text x="40" y="54" font-size="28" font-weight="800" style="fill:url(#title)">CI/CD with GitHub Actions</text>
+  <text x="42" y="82" font-size="15" class="muted">A production-ready pipeline — lint, test, build, deploy, scan — plus templates for every stack.</text>
+
+  <!-- pipeline rail -->
+  <line x1="70" y1="150" x2="890" y2="150" stroke="#222c38" stroke-width="2"/>
+  <circle class="run" r="5" fill="#43c777"/>
+
+  <!-- CI band -->
+  <text x="70" y="118" font-size="11" font-weight="700" style="fill:#5aa0ff">◆ CI — on pull request</text>
+  <rect class="st0" x="60" y="126" width="150" height="50" rx="10"/>
+  <text class="ck0" x="76" y="148" font-size="14" style="fill:#7ee6a0">✓</text>
+  <text x="92" y="148" font-size="12.5" font-weight="700">Lint</text>
+  <text x="92" y="165" font-size="10" class="muted">ESLint</text>
+  <rect class="st1" x="222" y="126" width="160" height="50" rx="10"/>
+  <text class="ck1" x="238" y="148" font-size="14" style="fill:#7ee6a0">✓</text>
+  <text x="254" y="148" font-size="12.5" font-weight="700">Test · Node 18 + 20</text>
+  <text x="254" y="165" font-size="10" class="muted">Jest matrix</text>
+  <rect class="st2" x="394" y="126" width="150" height="50" rx="10"/>
+  <text class="ck2" x="410" y="148" font-size="14" style="fill:#7ee6a0">✓</text>
+  <text x="426" y="148" font-size="12.5" font-weight="700">Build + coverage</text>
+  <text x="426" y="165" font-size="10" class="muted">codecov</text>
+
+  <!-- CD band -->
+  <text x="560" y="118" font-size="11" font-weight="700" style="fill:#43c777">◆ CD — on merge to main</text>
+  <rect class="st3" x="556" y="126" width="150" height="50" rx="10"/>
+  <text class="ck3" x="572" y="148" font-size="14" style="fill:#7ee6a0">✓</text>
+  <text x="588" y="148" font-size="12.5" font-weight="700">Build &amp; test</text>
+  <text x="588" y="165" font-size="10" class="muted">artifact</text>
+  <rect class="st4" x="718" y="126" width="172" height="50" rx="10"/>
+  <text class="ck4" x="734" y="148" font-size="14" style="fill:#7ee6a0">✓</text>
+  <text x="750" y="148" font-size="12.5" font-weight="700">Staging → smoke</text>
+  <text x="750" y="165" font-size="10" class="muted">environment</text>
+
+  <!-- production + security row -->
+  <g>
+  <rect class="st5" x="556" y="210" width="150" height="50" rx="10"/>
+  <text class="ck5" x="572" y="232" font-size="14" style="fill:#7ee6a0">✓</text>
+  <text x="588" y="232" font-size="12.5" font-weight="700">Deploy production</text>
+  <text x="588" y="249" font-size="10" class="muted">environment</text>
+  </g>
+  <text x="60" y="236" font-size="11" font-weight="700" style="fill:#b58cff">◆ Security — weekly + on push</text>
+  <g class="st6" style="stroke-width:1.5"></g>
+  <rect class="st6" x="60" y="244" width="470" height="50" rx="10"/>
+  <text class="ck6" x="76" y="266" font-size="14" style="fill:#7ee6a0">✓</text>
+  <text x="92" y="266" font-size="12.5" font-weight="700">npm audit · Snyk · Trivy</text>
+  <text x="92" y="283" font-size="10" class="muted">dependency + SAST + filesystem scans on a cron schedule</text>
+
+  <!-- footer -->
+  <text x="60" y="330" font-size="12.5" class="muted">Copy <tspan class="mono" style="fill:#cdd6e6">.github/workflows/</tspan> into your repo, set your secrets, open a PR — the pipeline runs itself.</text>
+  <text x="60" y="352" font-size="11" class="muted">Ships with a sample Node/Express app + ready-to-use templates for Python, Docker and Kubernetes.</text>
+</svg>
